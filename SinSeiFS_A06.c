@@ -11,7 +11,6 @@
 #include <time.h>
 
 static const char *dirpath = "/home/[user]/Downloads/";
-// static const char *key = "9(ku@AW1[Lmvgax6q`5Y2Ry?+sF!^HKQiBXCUSe&0M.b%rI'7d)o4~VfZ*{#:}ETt$3J-zpc]lnh8,GwP_ND|jO";
 static const char *logpath = "/home/[user]/Downloads/SinSeiFS.log";
 
 void getDirAndFile(char *dir, char *file, char *path) {
@@ -33,16 +32,6 @@ void decrypt(char *path, int isEncrypt) {
   char cursor[strlen(path)];
   strcpy(cursor,path);
   int cek;
-//   while (cursor-path < strlen(path)) {
-//     // char *ptr = strchr(key, *cursor);
-//     // printf("%s\n",ptr);
-//     // if (ptr != NULL) {
-//     //   int index = (ptr-key+strlen(key)-10)%strlen(key);
-//     //   if (isEncrypt) index = (ptr-key+strlen(key)+10)%strlen(key);
-//     //   *cursor = *(key+index);
-//     // }
-//     cursor++;
-//   }
     if(isEncrypt)
         for(int i = 0; i < strlen(path);i++){
             cek = path[i];
