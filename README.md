@@ -1,6 +1,16 @@
 # soal-shift-sisop-modul-4-A06-2021
 Jawaban Soal Shift Sistem Operasi Kelas A Kelompok A-06
 
+**Anggota kelompok**:
+
+```
+- Richard Asmarakandi       05111940000017
+- Muhammad Rafki Mardi      05111940000054
+- Husin Muhammad Assegaff   05111940000127
+```
+
+---
+
 
 **[Source Code](https://github.com/husinassegaff/soal-shift-sisop-modul-4-A06-2021/blob/main/SinSeiFS_A06.c)**
 
@@ -36,3 +46,13 @@ for(int i = 0; i < strlen(name);i++){
 - Sebagai contoh kita ambil huruf `x`. Huruf `x` memiliki jarak 2 ke kiri dari huruf `z`. maka pencerminannya kita ambil huruf yang memiliki jarak 2 ke kanan dari huruf `a` yaitu, huruf `c`.
 - Sedangkan jika parameter mode bernilai 1, maka kita mengenkripsi folder tersebut dengan ROT13.
 - Idenya adalah dengan menambahkan huruf sekarang dengan angka 13. Namun karena ditakutkan akan melebihi batas alphabet, maka hasilnya kita modulo dengan 26 (Jumlah keseluruhan alphabet).
+
+
+## Soal 4
+**Deskripsi:**\
+Membuat log system yang akan mendata setiap system call yang digunakan. Tujuannya untuk memonitor kegiatan pada filesystem.
+
+**Pembahasan:**
+```CPP
+
+```
