@@ -12,6 +12,61 @@
 
 **[Source Code](https://github.com/husinassegaff/soal-shift-sisop-modul-4-A06-2021/blob/main/SinSeiFS_A06.c)**
 
+## Fungsi Dasar
+**Berikut beberapa fungsi dasar yang bakal sering digunakan,**
+
+1. getFile()
+```CPP
+char *getFile(char *old_name){
+    char *e = strrchr (old_name,'/');
+    if (e == NULL)
+        e = "";
+    return e;
+}
+```
+
+Fungsi ini digunakan untuk mencari lokasi karakter terakhir dari string `old_name` yang berupa `/`
+
+2. getExt()
+```CPP
+char *getExt(char *old_name){
+    char *e = strrchr (old_name,'.');
+    if (e == NULL)
+        e = "";
+    return e;
+}
+```
+
+Fungsi ini dipakai untuk memastikan adanya ekstensi file dengan melihat dari lokasi karakter terakhir dari string `old_name` yang berbentuk `.`
+
+3. getName()
+```CPP
+char *getName(char *old_name){
+    int nameLen;
+    int extLen;
+    int len;
+
+    nameLen = strlen(old_name);
+    extLen =  strlen(getExt(old_name));
+    len = (nameLen-extLen);
+    
+    char *name = (char *) malloc(len);
+
+
+    for(int i = 0;i<len;i++){
+        name[i]=old_name[i];
+    }
+
+    strcpy(old_name,name);
+
+    free(name);
+    
+    return old_name;
+}
+```
+
+Fungsi ini digunakan untuk memperbarui isi dari string `old_name`
+
 ## Soal 1
 
 **Deskripsi:**\
