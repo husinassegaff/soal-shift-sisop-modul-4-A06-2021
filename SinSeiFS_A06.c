@@ -36,7 +36,7 @@ void listFilesRecursively(char *basePath){
             strcat(path, dp->d_name);
             listFilesRecursively(path);
             
-            printf("%s\n", dp->d_name);
+            printf("%s\n", path);
 
         }
     }
@@ -50,40 +50,6 @@ char *getFile(char *old_name){
     if (e == NULL)
         e = "";
     return e;
-}
-
-// string setelah titik terakhir (termasuk titik tersebut)
-
-char *getExt(char *old_name){
-    char *e = strrchr (old_name,'.');
-    if (e == NULL)
-        e = "";
-    return e;
-}
-
-// nama file
-
-char *getName(char *old_name){
-    int nameLen;
-    int extLen;
-    int len;
-
-    nameLen = strlen(old_name);
-    extLen =  strlen(getExt(old_name));
-    len = (nameLen-extLen);
-    
-    char *name = (char *) malloc(len);
-
-
-    for(int i = 0;i<len;i++){
-        name[i]=old_name[i];
-    }
-
-    strcpy(old_name,name);
-
-    free(name);
-    
-    return old_name;
 }
 
 char *getPath(char *old_name){
@@ -105,26 +71,46 @@ char *getPath(char *old_name){
 
     return old_name;
 }
+// string setelah titik terakhir (termasuk titik tersebut)
+
+char *getExt(char *old_name){
+    char *e = strrchr (old_name,'.');
+    if (e == NULL)
+        e = "";
+    return e;
+}
+
+// nama file
+
+char *getName(char *old_name){
+    int nameLen;
+    int extLen;
+
+    char *name = (char *) malloc(1024);
+
+    nameLen = strlen(old_name);
+    extLen =  strlen(getExt(old_name));
+
+    for(int i = 0;i<(nameLen-extLen);i++){
+        name[i]=old_name[i];
+    }
+
+    strcpy(old_name,name);
+
+    free(name);
+    
+    return old_name;
+}
 
 // enkripsi & dekripsi AtoZ_ file dan RX_ (mkdir)
 
 char *atBash(char *old_name,int mode){
-
-    char *path = (char *) malloc(1024);
-    char *file = (char *) malloc(1024);    
+    
     char *ext = (char *) malloc(128);
     char *name = (char *) malloc(1024);
 
-    // char where[1000];
-    // strcpy(where,old_name);
-    // strcpy(path,getPath(where));
-    // strcpy(file,getFile(old_name)); 
     strcpy(ext,getExt(old_name));
-    printf("%s\n",ext);
     strcpy(name,getName(old_name));
-    printf("%sdsa\n",name);
-
-    // printf("%s\n",ext);
 
     for(int i = 0; i < strlen(name);i++){
         if('a'<=name[i] && name[i]<='z'){
@@ -140,22 +126,11 @@ char *atBash(char *old_name,int mode){
         }
     }
 
-
-    // strcpy(old_name,path);
     strcpy(old_name,name);
-    printf("%s\n",old_name);
     strcat(old_name,ext);
-    printf("%s\n",old_name);
 
-    // printf("%s\n",name);
-    // printf("%s\n",ext);
-
-    free(path);
-    free(file);
     free(name);
     free(ext);
-
-    // printf("%s\n",old_name);
 
     return old_name;
 }
@@ -207,17 +182,12 @@ int decDif(char *bin){
 char *toLow(char *old_name){
     int i = 0;
 
-    char *path = (char *) malloc(1024);
-    char *file = (char *) malloc(1024);
     char *bin = (char *) malloc(128);
     char *ext = (char *) malloc(128);
     char *name = (char *) malloc(1024);
-    char where[1000];
-    strcpy(where,old_name);
-    strcpy(path,getPath(where));
-    strcpy(file,getFile(old_name));   
-    strcpy(ext,getExt(file));
-    strcpy(name,getName(file));
+
+    strcpy(ext,getExt(old_name));
+    strcpy(name,getName(old_name));
 
     while(name[i]){
         if('a'<=name[i] && name[i]<='z'){
@@ -235,14 +205,10 @@ char *toLow(char *old_name){
 
     sprintf(bin,".%d", decDif(bin));
 
-    strcpy(old_name,path);
-    strcat(old_name,name);
+    strcpy(old_name,name);
     strcat(old_name,ext);
     strcat(old_name,bin);
 
-
-    free(path);
-    free(file);
     free(name);
     free(ext);
     free(bin);
@@ -255,17 +221,13 @@ char *toLow(char *old_name){
 char *toNor(char *old_name){
     int i = 0;
 
-    char *path = (char *) malloc(1024);
-    char *file = (char *) malloc(1024);
     char *dec = (char *) malloc(128);
     char *ext = (char *) malloc(128);
     char *name = (char *) malloc(1024);
 
-    strcpy(file,getFile(old_name));
-    strcpy(dec,getExt(file));    
-    strcpy(ext,getExt(getName(file)));
-    strcpy(name,getName(file));
-    strcpy(path,getPath(old_name));
+    strcpy(dec,getExt(old_name));
+    strcpy(ext,getExt(getName(old_name)));
+    strcpy(name,getName(old_name));
 
     memmove(dec, dec+1, strlen(dec));
 
@@ -282,14 +244,12 @@ char *toNor(char *old_name){
         i++;
     }
 
-    strcpy(old_name,path);
-    strcat(old_name,name);
+    strcpy(old_name,name);
     strcat(old_name,ext);
 
-    free(path);
-    free(file);
     free(name);
     free(ext);
+    free(dec);
 
     return old_name;
 }
@@ -317,18 +277,13 @@ char *key(char *keys, char *name){
 
 char *toVig(char *old_name, int mode){
 
-    char *path = (char *) malloc(1024);
-    char *file = (char *) malloc(1024);
     char *ext = (char *) malloc(128);
     char *name = (char *) malloc(1024);
-    char where[1000];
-    strcpy(where,old_name);
-    strcpy(file,getFile(old_name));
-    strcpy(name,getName(file));
-    strcpy(ext,getExt(file));
-    strcpy(path,getPath(old_name));
+
+    strcpy(ext,getExt(old_name));
+    strcpy(name,getName(old_name));
     
-    int nameLen = strlen(file);
+    int nameLen = strlen(old_name);
     char keys[nameLen];
     
     key(keys,name);
@@ -351,12 +306,9 @@ char *toVig(char *old_name, int mode){
         }
     }
 
-    strcpy(old_name,path);
-    strcat(old_name,name);
+    strcpy(old_name,name);
     strcat(old_name,ext);
 
-    free(path);
-    free(file);
     free(name);
     free(ext);
     
@@ -392,6 +344,7 @@ char *aIsaDe(char *old_name){
     return toNor(old_name);
 }
 
+
 void logFile(char *level, char *cmd,char *desc) {
     FILE *fp = fopen(logpath, "a");
     time_t t;
@@ -411,6 +364,7 @@ void enFilesRecursively(char *basePath){
     int res;
     char fpath[1000],tpath[1000];
     char path[1000];
+    char file[1000];
     struct dirent *dp;
     DIR *dir = opendir(basePath);
 
@@ -427,34 +381,41 @@ void enFilesRecursively(char *basePath){
             strcpy(fpath, basePath);
             strcat(fpath, "/");
             strcat(fpath, dp->d_name);
-            listFilesRecursively(fpath);
+            enFilesRecursively(fpath);
             
             strcpy(path,basePath);
             strcat(path,"/");
 
             strcpy(tpath,dp->d_name);
-
-            printf("%s\n", basePath);
-            
-            if(strcmp(fpath,atozTag)){
-                if(strcmp(dp->d_name,atozTag)!=0){
-                    atBash(tpath,0);
-                    strcat(path, tpath);
+            strcpy(file,tpath);
+            if(strstr(fpath,atozTag)!= NULL){
+                printf("atoz\n");
+                if(strstr(dp->d_name,atozTag)==NULL){
+                    atoz(file);
+                    strcat(path, file);
+                    printf("%s\n%s\n",fpath,path);
                     res = rename(fpath, path);
                 }
                 if(res == -1) printf("%d\n",errno);
-            }else if(strcmp(fpath,rxTag)){
-                if(strcmp(dp->d_name,rxTag)!=0)
-                    res = rename(fpath, rxRnEn(tpath));
+            }else if(strstr(fpath,rxTag)!= NULL){
+                printf("rx\n");
+                if(strstr(dp->d_name,rxTag)==NULL){
+                    rxRnEn(file);
+                    strcat(path, file);
+                    printf("%s\n%s\n",fpath,path);
+                    res = rename(fpath, path);
+                }
                 if(res == -1) printf("%d\n",errno);
-            }else if(strcpy(fpath,aisaTag)){
-                if(strcmp(dp->d_name,aisaTag)!=0)
-                    res = rename(fpath, toLow(tpath));
+            }else if(strstr(fpath,aisaTag)!= NULL){
+                printf("aisa\n");
+                if(strstr(dp->d_name,aisaTag)==NULL){
+                    aIsaEn(file);
+                    strcat(path, file);
+                    printf("%s\n%s\n",fpath,path);
+                    res = rename(fpath, file);
+                }
                 if(res == -1) printf("%d\n",errno);
             }
-
-
-            // log
 
             char desc[100];
             sprintf(desc,"%s::%s",fpath,tpath);
@@ -641,7 +602,7 @@ static int xmp_rename(const char *from, const char *to){
 
 	res = rename(fpath, tpath);
 	if(res == -1) return -errno;
-    printf("%s\n",tpath);
+    // printf("%s\n",tpath);
     enFilesRecursively(tpath);
 
     // log
