@@ -12,6 +12,84 @@
 
 **[Source Code](https://github.com/husinassegaff/soal-shift-sisop-modul-4-A06-2021/blob/main/SinSeiFS_A06.c)**
 
+**Deskripsi:**\
+Dalam modul 4 digunakan libfuse (file system in userspace) yang kebanyakan mengadopsi fungsi [pada laman berikut](https://libfuse.github.io/doxygen/example_2passthrough_8c_source.html)
+
+- **Fungsi `enFilesRecusively()`**
+
+```c
+void enFilesRecursively(char *basePath){
+    int res;
+    char fpath[1000],tpath[1000];
+    char path[1000];
+    char file[1000];
+    struct dirent *dp;
+    DIR *dir = opendir(basePath);
+
+    // Unable to open directory stream
+    if (!dir)
+        return;
+
+
+    while ((dp = readdir(dir)) != NULL)
+    {
+        if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0)
+        {
+            // Construct new path from our base path
+            strcpy(fpath, basePath);
+            strcat(fpath, "/");
+            strcat(fpath, dp->d_name);
+            enFilesRecursively(fpath);
+
+            strcpy(path,basePath);
+            strcat(path,"/");
+
+            strcpy(tpath,dp->d_name);
+            strcpy(file,tpath);
+            if(strstr(fpath,atozTag)!= NULL){
+                printf("atoz\n");
+                if(strstr(dp->d_name,atozTag)==NULL){
+                    atoz(file);
+                    strcat(path, file);
+                    printf("%s\n%s\n",fpath,path);
+                    res = rename(fpath, path);
+                }
+                if(res == -1) printf("%d\n",errno);
+            }else if(strstr(fpath,rxTag)!= NULL){
+                printf("rx\n");
+                if(strstr(dp->d_name,rxTag)==NULL){
+                    rxRnEn(file);
+                    strcat(path, file);
+                    printf("%s\n%s\n",fpath,path);
+                    res = rename(fpath, path);
+                }
+                if(res == -1) printf("%d\n",errno);
+            }else if(strstr(fpath,aisaTag)!= NULL){
+                printf("aisa\n");
+                if(strstr(dp->d_name,aisaTag)==NULL){
+                    aIsaEn(file);
+                    strcat(path, file);
+                    printf("%s\n%s\n",fpath,path);
+                    res = rename(fpath, file);
+                }
+                if(res == -1) printf("%d\n",errno);
+            }
+
+            char desc[100];
+            sprintf(desc,"%s::%s",fpath,tpath);
+            logFile("INFO","RENAME",desc);
+
+        }
+    }
+    closedir(dir);
+}
+```
+
+- Fungsi menerima sebuah `path` yang kemudian akan masuk kedalam loop `while` guna dilakukan rekursi.
+- File `path` akan dibuka dengan `openddir()` guna looping file yang berada didalammnya.
+- Fungsi dugunakan dalam melakukan `rename` dengan bantuan `if else` statement.
+- `Tag(s)` berupa string yang menandakan enrkipsi apa yang harus dijalankan terhadap file tersebut.
+
 ## Soal 1
 
 **Deskripsi:**\
@@ -47,6 +125,12 @@ for(int i = 0; i < strlen(name);i++){
 - Sebagai contoh kita ambil huruf `x`. Huruf `x` memiliki jarak 2 ke kiri dari huruf `z`. maka pencerminannya kita ambil huruf yang memiliki jarak 2 ke kanan dari huruf `a` yaitu, huruf `c`.
 - Sedangkan jika parameter mode bernilai 1, maka kita mengenkripsi folder tersebut dengan ROT13.
 - Idenya adalah dengan menambahkan huruf sekarang dengan angka 13. Namun karena ditakutkan akan melebihi batas alphabet, maka hasilnya kita modulo dengan 26 (Jumlah keseluruhan alphabet).
+
+**Bukti :**
+
+**Kesulitan :**
+
+- Belum bisa mengimplementasikan pada saat mkdir.
 
 ## Soal 2
 
@@ -166,9 +250,12 @@ char *key(char *keys, char *name){
 - loop `while` akan mengisi keys dengan key yang case sensitive untuk membantu enkripsi dan dekripsi.
 - jika sudah melakukan traverse sepanjang `file` maka akan dikembalikan keys ke `toVig()`.
 
-```c
+**Bukti :**
 
-```
+**Kesulitan :**
+
+- Belum bisa mengimplementasikan pada saat mkdir dan belum mengimplementasikan enkripsi saat mkdir.
+- Belum bisa mengimplementasikan `link` guna partifile file.
 
 ## Soal 3
 
@@ -358,6 +445,12 @@ char *trueBin (char *bin, int len){
 - Jika `bin` bernilai `1` maka char pada saat itu akan dikenakan `toupper()`.
 - Hasil `while` akan digabungakn dengan ekstensi lalu dikembalikan.
 
+**Bukti :**
+
+**Kesulitan :**
+
+- Belum bisa mengimplementasikan pada saat mkdir.
+
 ## Soal 4
 
 **Deskripsi:**\
@@ -384,3 +477,9 @@ void logFile(char *level, char *cmd,char *desc) {
 
 - Pada fungsi void ini terdapat variabel t_time untuk menunjukkan waktu pada log. Kemudian, struct tm yang diguanakn untuk menunjukkan waktu sekarang
 - Kemudian untuk format loggingnya jika tujuan logging diketahui / tidak bernilai NULL adalah `[Level]::[dd][mm][yyyy]-[HH]:[MM]:[SS]:[CMD]::[DESC :: DESC]` yang pada fungsi kami dibuat menjadi `fprintf(fp, "%s::%s::%s::%s", level, tmBuff, cmd, desc);`
+
+**Bukti :**
+
+**Kesulitan :**
+
+- Tidak Ada
