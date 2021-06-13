@@ -54,5 +54,21 @@ Membuat log system yang akan mendata setiap system call yang digunakan. Tujuanny
 
 **Pembahasan:**
 ```CPP
+void logFile(char *level, char *cmd,char *desc) {
+    FILE *fp = fopen(logpath, "a");
+    time_t t;
+    struct tm *tmp;
+    char tmBuff[100];
+    time(&t);
+    tmp = localtime(&t);
+    strftime(tmBuff, sizeof(tmBuff), "%y%m%d-%H:%M:%S", tmp);
 
+    fprintf(fp, "%s::%s::%s::%s", level, tmBuff, cmd, desc);
+    fprintf(fp, "\n");
+    
+    fclose(fp);
+}
 ```
+
+- Pada fungsi void ini terdapat variabel t_time untuk menunjukkan waktu pada log. Kemudian, struct tm yang diguanakn untuk menunjukkan waktu sekarang
+- Kemudian untuk format loggingnya jika tujuan logging diketahui / tidak bernilai NULL adalah `[Level]::[dd][mm][yyyy]-[HH]:[MM]:[SS]:[CMD]::[DESC :: DESC]` yang pada fungsi kami dibuat menjadi `fprintf(fp, "%s::%s::%s::%s", level, tmBuff, cmd, desc);`
