@@ -10,8 +10,8 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-static  const  char *dirpath = "/home/osd0081/Desktop/Sisop/Ujicoba/modul4/com";
-static  const  char *logpath = "/home/osd0081/Desktop/Sisop/Ujicoba/modul4/com/SinFei.log";
+static  const  char *dirpath = "/home/osd0081/Desktop/Sisop/soal-shift-sisop-modul-4-A06-2021";
+static  const  char *logpath = "/home/osd0081/Desktop/Sisop/soal-shift-sisop-modul-4-A06-2021/SinFei.log";
 
 static  const  char *atozTag = "AtoZ_";
 static  const  char *rxTag = "RX_";
@@ -52,41 +52,6 @@ char *getFile(char *old_name){
     return e;
 }
 
-// string setelah titik terakhir (termasuk titik tersebut)
-
-char *getExt(char *old_name){
-    char *e = strrchr (old_name,'.');
-    if (e == NULL)
-        e = "";
-    return e;
-}
-
-// nama file
-
-char *getName(char *old_name){
-    int nameLen;
-    int extLen;
-    int len;
-
-    nameLen = strlen(old_name);
-    extLen =  strlen(getExt(old_name));
-    len = (nameLen-extLen);
-    
-    char *name = (char *) malloc(len);
-
-
-    for(int i = 0;i<len;i++){
-        name[i]=old_name[i];
-    }
-
-    strcpy(old_name,name);
-
-    free(name);
-    
-    return old_name;
-}
-// string setelah titik terakhir (termasuk titik tersebut)
-
 char *getPath(char *old_name){
     int pathLen;
     int fileLen;
@@ -104,6 +69,36 @@ char *getPath(char *old_name){
 
     free(path);
 
+    return old_name;
+}
+// string setelah titik terakhir (termasuk titik tersebut)
+
+char *getExt(char *old_name){
+    char *e = strrchr (old_name,'.');
+    if (e == NULL)
+        e = "";
+    return e;
+}
+
+// nama file
+
+char *getName(char *old_name){
+    int nameLen;
+    int extLen;
+
+    char *name = (char *) malloc(1024);
+
+    nameLen = strlen(old_name);
+    extLen =  strlen(getExt(old_name));
+
+    for(int i = 0;i<(nameLen-extLen);i++){
+        name[i]=old_name[i];
+    }
+
+    strcpy(old_name,name);
+
+    free(name);
+    
     return old_name;
 }
 
@@ -349,6 +344,7 @@ char *aIsaDe(char *old_name){
     return toNor(old_name);
 }
 
+
 void logFile(char *level, char *cmd,char *desc) {
     FILE *fp = fopen(logpath, "a");
     time_t t;
@@ -585,6 +581,7 @@ static int xmp_rename(const char *from, const char *to){
 	printf("rename\n");
     
     char fpath[1000], tpath[1000];
+    char opath[1000];
 	
 	if(strcmp(from, "/") == 0){
 		from = dirpath;
@@ -603,11 +600,21 @@ static int xmp_rename(const char *from, const char *to){
 	}
 
 	int res;
+    sprintf(opath,"%s",from);
 
-	res = rename(fpath, tpath);
-	if(res == -1) return -errno;
-    // printf("%s\n",tpath);
-    enFilesRecursively(tpath);
+    if(strstr(getFile(opath),atozTag)!=NULL||strstr(getFile(opath),aisaTag)!=NULL||strstr(getFile(opath),rxTag)!=NULL){
+        printf("ini\n");
+        enFilesRecursively(fpath);
+        res = rename(fpath, tpath);
+        if(res == -1) return -errno;
+    }else{
+        printf("itu\n");
+        printf("%s %s\n",fpath,tpath);
+        res = rename(fpath, tpath);
+        if(res == -1) return -errno;
+        enFilesRecursively(tpath);
+    }
+
 
     // log
 
