@@ -1,8 +1,5 @@
 # soal-shift-sisop-modul-4-A06-2021
 
-<<<<<<< HEAD
-Jawaban Soal Shift Sistem Operasi Kelas A Kelompok A-06
-=======
 **Anggota kelompok**:
 
 ```
@@ -12,8 +9,6 @@ Jawaban Soal Shift Sistem Operasi Kelas A Kelompok A-06
 ```
 
 ---
-
->>>>>>> 23720764b3a37ee7ee57ff364a2af7e959b7aedc
 
 **[Source Code](https://github.com/husinassegaff/soal-shift-sisop-modul-4-A06-2021/blob/main/SinSeiFS_A06.c)**
 
@@ -53,7 +48,6 @@ for(int i = 0; i < strlen(name);i++){
 - Sedangkan jika parameter mode bernilai 1, maka kita mengenkripsi folder tersebut dengan ROT13.
 - Idenya adalah dengan menambahkan huruf sekarang dengan angka 13. Namun karena ditakutkan akan melebihi batas alphabet, maka hasilnya kita modulo dengan 26 (Jumlah keseluruhan alphabet).
 
-<<<<<<< HEAD
 ## Soal 2
 
 <!-- **2.A** -->
@@ -363,13 +357,14 @@ char *trueBin (char *bin, int len){
 - Hasil `trueBin()` dan `binDif()` akan digunakan oleh `toNor()` dalam loop `while`.
 - Jika `bin` bernilai `1` maka char pada saat itu akan dikenakan `toupper()`.
 - Hasil `while` akan digabungakn dengan ekstensi lalu dikembalikan.
-=======
 
 ## Soal 4
+
 **Deskripsi:**\
 Membuat log system yang akan mendata setiap system call yang digunakan. Tujuannya untuk memonitor kegiatan pada filesystem.
 
 **Pembahasan:**
+
 ```CPP
 void logFile(char *level, char *cmd,char *desc) {
     FILE *fp = fopen(logpath, "a");
@@ -382,11 +377,10 @@ void logFile(char *level, char *cmd,char *desc) {
 
     fprintf(fp, "%s::%s::%s::%s", level, tmBuff, cmd, desc);
     fprintf(fp, "\n");
-    
+
     fclose(fp);
 }
 ```
 
 - Pada fungsi void ini terdapat variabel t_time untuk menunjukkan waktu pada log. Kemudian, struct tm yang diguanakn untuk menunjukkan waktu sekarang
 - Kemudian untuk format loggingnya jika tujuan logging diketahui / tidak bernilai NULL adalah `[Level]::[dd][mm][yyyy]-[HH]:[MM]:[SS]:[CMD]::[DESC :: DESC]` yang pada fungsi kami dibuat menjadi `fprintf(fp, "%s::%s::%s::%s", level, tmBuff, cmd, desc);`
->>>>>>> 23720764b3a37ee7ee57ff364a2af7e959b7aedc
