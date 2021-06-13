@@ -182,6 +182,9 @@ for(int i = 0; i < strlen(name);i++){
 - Idenya adalah dengan menambahkan huruf sekarang dengan angka 13. Namun karena ditakutkan akan melebihi batas alphabet, maka hasilnya kita modulo dengan 26 (Jumlah keseluruhan alphabet).
 
 **Bukti :**
+![Screenshot (36)](https://user-images.githubusercontent.com/74223938/121812416-e5a43400-cc91-11eb-8bac-d22f25c14bef.png)
+
+![Screenshot (37)](https://user-images.githubusercontent.com/74223938/121812381-d02f0a00-cc91-11eb-9969-266415ef1868.png)
 
 **Kesulitan :**
 
@@ -306,7 +309,9 @@ char *key(char *keys, char *name){
 - jika sudah melakukan traverse sepanjang `file` maka akan dikembalikan keys ke `toVig()`.
 
 **Bukti :**
+![Screenshot (38)](https://user-images.githubusercontent.com/74223938/121812485-15ebd280-cc92-11eb-8bfc-f6166709575c.png)
 
+![Screenshot (39)](https://user-images.githubusercontent.com/74223938/121812497-2bf99300-cc92-11eb-840e-13c2e5e08cd5.png)
 **Kesulitan :**
 
 - Belum bisa mengimplementasikan pada saat mkdir dan belum mengimplementasikan enkripsi saat mkdir.
@@ -501,6 +506,8 @@ char *trueBin (char *bin, int len){
 - Hasil `while` akan digabungakn dengan ekstensi lalu dikembalikan.
 
 **Bukti :**
+![Screenshot (41)](https://user-images.githubusercontent.com/74223938/121812522-521f3300-cc92-11eb-8147-76a62f532358.png)
+
 
 **Kesulitan :**
 
@@ -534,6 +541,7 @@ void logFile(char *level, char *cmd,char *desc) {
 - Kemudian untuk format loggingnya jika tujuan logging diketahui / tidak bernilai NULL adalah `[Level]::[dd][mm][yyyy]-[HH]:[MM]:[SS]:[CMD]::[DESC :: DESC]` yang pada fungsi kami dibuat menjadi `fprintf(fp, "%s::%s::%s::%s", level, tmBuff, cmd, desc);`
 
 **Bukti :**
+![Screenshot (42)](https://user-images.githubusercontent.com/74223938/121812529-5d725e80-cc92-11eb-89d6-885af8ec6bc7.png)
 
 **Kesulitan :**
 
